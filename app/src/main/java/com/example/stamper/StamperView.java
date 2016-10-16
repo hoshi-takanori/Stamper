@@ -14,6 +14,8 @@ public class StamperView extends View {
     private Bitmap bitmap;
     private Canvas bitmapCanvas;
 
+    private int color = Color.BLACK;
+
     public StamperView(Context context) {
         super(context);
     }
@@ -37,6 +39,16 @@ public class StamperView extends View {
         canvas.drawBitmap(bitmap, 0, 0, null);
     }
 
+    public void clear() {
+        Paint paint = new Paint();
+        bitmapCanvas.drawColor(Color.WHITE);
+        invalidate();
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -45,7 +57,7 @@ public class StamperView extends View {
 
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             Paint paint = new Paint();
-            paint.setColor(Color.RED);
+            paint.setColor(color);
             paint.setStrokeWidth(20);
             paint.setStrokeCap(Paint.Cap.ROUND);
             bitmapCanvas.drawPoint(x, y, paint);
@@ -53,11 +65,5 @@ public class StamperView extends View {
         }
 
         return true;
-    }
-
-    public void clear() {
-        Paint paint = new Paint();
-        bitmapCanvas.drawColor(Color.WHITE);
-        invalidate();
     }
 }
