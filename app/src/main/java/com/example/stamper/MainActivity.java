@@ -9,17 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+/**
+ * お絵描きアプリのアクティビティ
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * お絵描きビュー
+     */
     private StamperView stamperView;
 
+    /**
+     * アプリを起動した時に呼ばれるメソッド
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // お絵描きビューを取得する
         stamperView = (StamperView) findViewById(R.id.stamperView);
 
+        // お絵描きする方法の選択肢を設定する
         Spinner modeSpinner = (Spinner) findViewById(R.id.modeSpinner);
         ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         modeAdapter.add("点を描く");
@@ -36,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // お絵描きする色の選択肢を設定する
         Spinner colorSpinner = (Spinner) findViewById(R.id.colorSpinner);
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         colorAdapter.add("黒");
@@ -58,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 全部消すボタンが押された時の処理を設定する
         Button clearButton = (Button) findViewById(R.id.clearButton);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * お絵描きする色が選択された時に呼ばれるメソッド
+     */
     private void changeColor(String color) {
         switch (color) {
             case "黒":
