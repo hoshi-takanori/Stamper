@@ -54,4 +54,10 @@ public class StamperView extends View {
 
         return true;
     }
+
+    public void clear() {
+        Paint paint = new Paint();
+        bitmapCanvas.drawColor(Color.WHITE);
+        invalidate();
+    }
 }
