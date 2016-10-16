@@ -9,12 +9,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_UP;
+
 public class StamperView extends View {
 
     private Bitmap bitmap;
     private Canvas bitmapCanvas;
 
-    private int color = Color.BLACK;
+    private String mode;
+    private int color;
 
     public StamperView(Context context) {
         super(context);
@@ -45,23 +50,39 @@ public class StamperView extends View {
         invalidate();
     }
 
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     public void setColor(int color) {
         this.color = color;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
         int action = event.getAction();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
 
-        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-            Paint paint = new Paint();
-            paint.setColor(color);
-            paint.setStrokeWidth(20);
-            paint.setStrokeCap(Paint.Cap.ROUND);
-            bitmapCanvas.drawPoint(x, y, paint);
-            invalidate();
+        Paint paint = new Paint();
+        paint.setColor(color);
+        paint.setStrokeWidth(20);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+
+        switch (mode) {
+            case "点を描く":
+                if (action == ACTION_DOWN) {
+                    bitmapCanvas.drawPoint(x, y, paint);
+                    invalidate();
+                }
+                break;
+
+            case "点を連続":
+                if (action == ACTION_DOWN || action == ACTION_MOVE) {
+                    bitmapCanvas.drawPoint(x, y, paint);
+                    invalidate();
+                }
+                break;
         }
 
         return true;

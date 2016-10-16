@@ -20,6 +20,22 @@ public class MainActivity extends AppCompatActivity {
 
         stamperView = (StamperView) findViewById(R.id.stamperView);
 
+        Spinner modeSpinner = (Spinner) findViewById(R.id.modeSpinner);
+        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        modeAdapter.add("点を描く");
+        modeAdapter.add("点を連続");
+        modeSpinner.setAdapter(modeAdapter);
+        modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                stamperView.setMode((String) parent.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         Spinner colorSpinner = (Spinner) findViewById(R.id.colorSpinner);
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         colorAdapter.add("黒");
